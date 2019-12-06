@@ -3,7 +3,7 @@ const request = require('../request');
 const { dropCollection } = require('../db');
 const connect = require('../../lib/utils/connect');
 const mongoose = require('mongoose');
-// const app = require('../../lib/app');
+const User = require('../../lib/model/User');
 
 describe('Tests Auth routes', () => {
   beforeAll(() => {
@@ -16,7 +16,7 @@ describe('Tests Auth routes', () => {
     return mongoose.connection.close();
   });
 
-  it('Signs in a user', () => {
+  it('Signs Up a user', () => {
     return request
       .post('/api/v1/auth/signup')
       .send({ username: 'test', password: '1234' })
@@ -26,7 +26,21 @@ describe('Tests Auth routes', () => {
           username: 'test'
         });
       });
-    
   });
+
+  it('Signs In an already registered User', async() => {
+    await User.create({ username: 'test2', password: '1234' });
+    const res = await request
+      .post('/api/v1/auth/signin')
+      .send({ username: 'test2', password: '1234' });
+
+    expect(res.body).toEqual({
+      _id: expect.any(String),
+      username: 'test2'
+    });
+  });
+
   
+
+
 });
