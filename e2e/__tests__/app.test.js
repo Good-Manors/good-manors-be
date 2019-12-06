@@ -14,7 +14,7 @@ describe('core app api', () => {
     return request
       .get('/bad-path')
       .expect(404)
-      .expect('Content-Type', /text/);
+      .expect('Content-Type', /json/);
   });
 
   it('returns application/json 404 on bad api path', () => {
