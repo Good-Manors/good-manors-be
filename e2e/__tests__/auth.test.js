@@ -39,8 +39,4 @@ describe('Tests Auth routes', () => {
       username: 'test2'
     });
   });
-
-  
-
-
 });
