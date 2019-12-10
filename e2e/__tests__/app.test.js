@@ -1,5 +1,4 @@
 const request = require('../request');
-const mongoose = require('mongoose');
 
 describe('core app api', () => {
   it('is alive', () => {
@@ -27,4 +26,5 @@ describe('core app api', () => {
         expect(res.body.error).toMatch(/not found/i);
       });
   });
+
 });
