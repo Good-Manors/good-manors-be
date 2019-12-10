@@ -41,4 +41,51 @@ describe('Tests Auth routes', () => {
       username: 'test2'
     });
   });
+
+  it('Signs out a User', async() => {
+    await User.create({ username: 'test2', password: '1234' });
+    await agent
+      .post('/api/v1/auth/signin')
+      .send({ username: 'test2', password: '1234' });
+    return agent
+      .get('/api/v1/auth/signout')
+      .then(res => {
+        expect(res.body).toEqual({ success: true });
+      });
+  });
+
+  it('Should return an error with wrong User or Password', async() => {
+    await User.create({ username: 'test2', password: '1234' });
+    await agent
+      .post('/api/v1/auth/signin')
+      .send({ username: 'test234', password: '1234' })
+      .expect(401)
+      .then(res => {
+        expect(res.status).toBe(401);
+      });
+  });
+
+  it('Should verify a session', async() => {
+    await User.create({ username: 'test2', password: '1234' });
+    await agent
+      .post('/api/v1/auth/signin')
+      .send({ username: 'test2', password: '1234' });
+    return agent
+      .get('/api/v1/auth/verify')
+      .then(res => {
+        expect(res.body).toEqual({ 
+          _id: expect.any(String), 
+          username: 'test2' });
+      });
+  });
+
+  it('Should Error if no Session', async() => {
+    await agent
+      .get('/api/v1/auth/signout');
+    return agent
+      .get('/api/v1/auth/verify')
+      .then(res => {
+        expect(res.body.status).toBe(401);
+      });
+  });
 });

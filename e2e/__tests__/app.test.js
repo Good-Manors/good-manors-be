@@ -1,4 +1,5 @@
 const request = require('../request');
+const mongoose = require('mongoose');
 
 describe('core app api', () => {
   it('is alive', () => {
