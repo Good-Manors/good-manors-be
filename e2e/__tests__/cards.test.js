@@ -15,9 +15,11 @@ describe('Tests the Cards routes', () => {
   beforeAll(()=> {
     connect();
   });
+
   beforeEach(()=> {
     dropDatabase();
   });
+  
   afterAll(()=> {
     return mongoose.connection.close();
   });
@@ -27,9 +29,11 @@ describe('Tests the Cards routes', () => {
     const homes = await Home.create({ title: 'Test House', user: user._id });
     const drawer = await Drawer.create({ name: 'room', home: homes._id });
     const card = { name: 'card', content: { stuff: '123' }, drawer: drawer._id };
+
     await agent
       .post('/api/v1/auth/signin')
       .send({ username: 'test', password: '1234' });
+
     return agent
       .post('/api/v1/cards')
       .send(card)
