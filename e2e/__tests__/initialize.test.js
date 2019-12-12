@@ -25,30 +25,15 @@ describe('Tests the Initialize route', () => {
     return mongoose.connection.close();
   });
 
+  // const homes = await Home.create({ title: 'Test House', user: user._id });
+  // const drawer = await Drawer.create({ name: 'room', home: homes._id });
+  // const card = { name: 'card', type: 'Appliance', content: ['text', '123'], drawer: drawer._id };
+
   const house = {
     title: 'My House!',
-    drawers: [
-      {
-        name: 'Kitchen',
-        cards: [
-          {
-            name: 'Refridgerator',
-            type: 'Appliance',
-            content: [['text', 'I purchased this fridge from our neighbor Jeff. Got it for a great price...no regrets'], ['image', 'http://localhost:7890/src/assets/good-manors-logo.png'], ['key-value', ['Brand', 'Samsung']], ['key-value', ['Model #', 'RF28R7551SG']], ['log', ['Purchased: 12/12/96', 'Serviced: 12/12/98', 'Serviced: 12/10/08']]]
-          },
-          { name: 'Oven', type: 'Appliance', content: [['log', ['a', 'b', 'c']], ['text', 'another text entry']] }
-        ]
-      },
-      {
-        name: 'Exterior',
-        cards: [
-          { name: 'Oak Tree', type: 'Plant', content: [['key-value', ['species', 'red oak']], ['text', 'planted in 1998']] },
-          { name: 'Deck Color', type: 'Paint Swatch', content: [['key-value', ['brand', 'Benjamin Moore']], ['key-value', ['color', 'Lime Green']]] }
-        ]
-      }
-    ]
+    drawers: [{ name: 'room' }],
+    cards: [{ name: 'card', type: 'Appliance', content: ['text', '123'] }]
   };
-
 
   it.only('should post an Initial set up Home, with Drawers, and Cards', () => {
     // await User.create({ username: 'test', password: '1234' });
@@ -59,10 +44,17 @@ describe('Tests the Initialize route', () => {
       .post('/api/v1/auth/signup')
       .send({ username: 'test', password: '1234' })
       .expect(200)
+      .then(() => {
+        return agent
+          .get('/api/v1/auth/verify')
+          .then(res => {
+            console.log(res.body);
+          });
+      })
       .then(async() => {
         await agent
-          .post('/api/v1/initialize')
-          .send(house)
+          .post('/api/v1/initialize', house)
+          // .send(house)
           .then(res => {
             console.log(res.body);
           })
