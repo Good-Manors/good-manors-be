@@ -5,10 +5,6 @@ const agent = request.agent(app);
 const { dropDatabase } = require('../db');
 const mongoose = require('mongoose');
 const connect = require('../../lib/utils/connect');
-const User = require('../../lib/model/User');
-const Home = require('../../lib/model/Home');
-const Drawer = require('../../lib/model/Drawer');
-const Card = require('../../lib/model/Card');
 
 describe('Tests the Initialize route', () => {
 
@@ -25,40 +21,58 @@ describe('Tests the Initialize route', () => {
     return mongoose.connection.close();
   });
 
-  // const homes = await Home.create({ title: 'Test House', user: user._id });
-  // const drawer = await Drawer.create({ name: 'room', home: homes._id });
-  // const card = { name: 'card', type: 'Appliance', content: ['text', '123'], drawer: drawer._id };
-
-  const house = {
-    title: 'My House!',
-    drawers: [{ name: 'room' }],
-    cards: [{ name: 'card', type: 'Appliance', content: ['text', '123'] }]
+  const house =
+  {
+    title: 'This is a test',
+    drawers: ['Kitchen', 'Dining'],
+    cards: [
+      [
+        'Appliance',
+        'Material',
+        'PaintSwatch',
+        'Utility',
+        'Contact',
+        'Plant',
+        'Pet'
+      ],
+      [
+        'Appliance',
+        'Material',
+        'PaintSwatch',
+        'Utility',
+        'Contact',
+        'Plant',
+        'Pet'
+      ]
+    ]
   };
 
-  it.only('should post an Initial set up Home, with Drawers, and Cards', () => {
-    // await User.create({ username: 'test', password: '1234' });
-    // await agent
-    //   .post('/api/v1/auth/signin')
-    //   .send({ username: 'test', password: '1234' });
-    return agent
+  it('should post an Initial set up Home, with Drawers, and Cards', async () => {
+    await agent
       .post('/api/v1/auth/signup')
       .send({ username: 'test', password: '1234' })
-      .expect(200)
-      .then(() => {
-        return agent
-          .get('/api/v1/auth/verify')
-          .then(res => {
-            console.log(res.body);
-          });
-      })
-      .then(async() => {
-        await agent
-          .post('/api/v1/initialize', house)
-          // .send(house)
-          .then(res => {
-            console.log(res.body);
-          })
-          .expect(200);
-      });
+      .expect(200);
+    await agent
+      .get('/api/v1/auth/verify');
+    await agent
+      .post('/api/v1/initialize')
+      .send(house)
+      .expect(200);
+  });
+
+  it('Should catch Errors', async() => {
+    const house2 = {
+      cards: [],
+    };
+    await agent
+      .post('/api/v1/auth/signup')
+      .send({ username: 'test', password: '1234' })
+      .expect(200);
+    await agent
+      .get('/api/v1/auth/verify');
+    const res = await agent
+      .post('/api/v1/initialize')
+      .send(house2);
+    expect(res.status).toEqual(500);
   });
 });

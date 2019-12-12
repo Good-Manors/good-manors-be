@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1576129344810" clover="3.2.0">
-  <project timestamp="1576129344810" name="All files">
-    <metrics statements="16" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0" elements="20" coveredelements="6" complexity="0" loc="16" ncloc="16" packages="1" files="1" classes="1"/>
+<coverage generated="1576181101755" clover="3.2.0">
+  <project timestamp="1576181101755" name="All files">
+    <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4" elements="20" coveredelements="20" complexity="0" loc="16" ncloc="16" packages="1" files="1" classes="1"/>
     <file name="initialize.js" path="/Users/johnnelson/alchemy/career-track/hubkeep/hubkeep-be/lib/routes/initialize.js">
-      <metrics statements="16" coveredstatements="6" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="0"/>
-      <line num="1" count="1" type="stmt"/>
-      <line num="2" count="1" type="stmt"/>
-      <line num="3" count="1" type="stmt"/>
-      <line num="4" count="1" type="stmt"/>
-      <line num="5" count="1" type="stmt"/>
-      <line num="7" count="1" type="stmt"/>
-      <line num="9" count="0" type="stmt"/>
-      <line num="11" count="0" type="stmt"/>
-      <line num="12" count="0" type="stmt"/>
-      <line num="18" count="0" type="stmt"/>
-      <line num="20" count="0" type="stmt"/>
-      <line num="26" count="0" type="stmt"/>
-      <line num="27" count="0" type="stmt"/>
-      <line num="28" count="0" type="stmt"/>
-      <line num="38" count="0" type="stmt"/>
-      <line num="44" count="0" type="stmt"/>
+      <metrics statements="16" coveredstatements="16" conditionals="0" coveredconditionals="0" methods="4" coveredmethods="4"/>
+      <line num="1" count="6" type="stmt"/>
+      <line num="2" count="6" type="stmt"/>
+      <line num="3" count="6" type="stmt"/>
+      <line num="4" count="6" type="stmt"/>
+      <line num="5" count="6" type="stmt"/>
+      <line num="7" count="6" type="stmt"/>
+      <line num="9" count="2" type="stmt"/>
+      <line num="11" count="2" type="stmt"/>
+      <line num="12" count="2" type="stmt"/>
+      <line num="18" count="1" type="stmt"/>
+      <line num="20" count="2" type="stmt"/>
+      <line num="26" count="1" type="stmt"/>
+      <line num="27" count="2" type="stmt"/>
+      <line num="28" count="14" type="stmt"/>
+      <line num="37" count="1" type="stmt"/>
+      <line num="43" count="1" type="stmt"/>
     </file>
   </project>
 </coverage>
