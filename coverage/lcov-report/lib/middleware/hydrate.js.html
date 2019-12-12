@@ -1,14 +1,14 @@
 <!doctype html>
 <html lang="en">
 <head>
-    <title>Code coverage report for lib/app.js</title>
+    <title>Code coverage report for lib/middleware/hydrate.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../prettify.css" />
-    <link rel="stylesheet" href="../base.css" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../sort-arrow-sprite.png);
+            background-image: url(../../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -16,7 +16,7 @@
 <div class='wrapper'>
   <div class='pad1'>
     <h1>
-      <a href="../index.html">All files</a> / <a href="index.html">lib</a> app.js
+      <a href="../../index.html">All files</a> / <a href="index.html">lib/middleware</a> hydrate.js
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
@@ -27,17 +27,17 @@
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>0/0</span>
+        <span class='fraction'>6/6</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>1/1</span>
+        <span class='fraction'>2/2</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>15/15</span>
+        <span class='fraction'>16/16</span>
       </div>
     </div>
     <p class="quiet">
@@ -72,58 +72,82 @@
 <a name='L24'></a><a href='#L24'>24</a>
 <a name='L25'></a><a href='#L25'>25</a>
 <a name='L26'></a><a href='#L26'>26</a>
-<a name='L27'></a><a href='#L27'>27</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
+<a name='L27'></a><a href='#L27'>27</a>
+<a name='L28'></a><a href='#L28'>28</a>
+<a name='L29'></a><a href='#L29'>29</a>
+<a name='L30'></a><a href='#L30'>30</a>
+<a name='L31'></a><a href='#L31'>31</a>
+<a name='L32'></a><a href='#L32'>32</a>
+<a name='L33'></a><a href='#L33'>33</a>
+<a name='L34'></a><a href='#L34'>34</a>
+<a name='L35'></a><a href='#L35'>35</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-yes">6x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const express = require('express');
-const app = express();
-const ensureAuth = require('./middleware/ensure-auth');
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const Home = require('../model/Home');
+const Drawer = require('../model/Drawer');
+const Card = require('../model/Card');
 &nbsp;
-app.use(require('cors')({
-  origin: true,
-  credentials: true
-}));
-app.use(require('cookie-parser')());
-app.use(express.json());
+module.exports = async(input) =&gt; {
+  let parentHome;
+  //input is a card {go get drawer, then get home}
+  if(input.drawer) {
+    const parentDrawer = await Drawer.findById(input.drawer);
+    parentHome = await Home.findById(parentDrawer.home);
+  }
+  //input is a drawer {go get home}
+  if(input.home) {
+    parentHome = await Home.findById(input.home);
+  }
+  //input is a home 
+  if(input.user) {
+    parentHome = input;
+  }
 &nbsp;
-// IS ALIVE TEST
-app.get('/hello', (req, res) =&gt; res.send('world'));
+  const returnObj = {
+    home: parentHome
+  };
 &nbsp;
-// app.use('/api/v1/RESOURCE', require('./routes/resource'));
-app.use('/api/v1/auth', require('./routes/auth'));
-app.use('/api/v1/homes', ensureAuth, require('./routes/homes'));
-app.use('/api/v1/drawers', ensureAuth, require('./routes/drawers'));
-app.use('/api/v1/cards', ensureAuth, require('./routes/cards'));
-app.use('/api/v1/initialize', ensureAuth, require('./routes/initialize'));
+  returnObj.drawers = await Drawer
+    .find({ home: parentHome._id });
 &nbsp;
-//Error Handling
-app.use(require('./middleware/not-found'));
-app.use(require('./middleware/error'));
+  returnObj.cards = await Promise.all(returnObj.drawers.map(drawer =&gt; {
+    return Card
+      .find({ drawer: drawer._id });
+  }));
 &nbsp;
-module.exports = app;
+  return returnObj;
+};
 &nbsp;</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
@@ -133,7 +157,7 @@ module.exports = app;
   generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Thu Dec 12 2019 12:06:47 GMT-0800 (Pacific Standard Time)
 </div>
 </div>
-<script src="../prettify.js"></script>
+<script src="../../prettify.js"></script>
 <script>
 window.onload = function () {
         if (typeof prettyPrint === 'function') {
@@ -141,7 +165,7 @@ window.onload = function () {
         }
 };
 </script>
-<script src="../sorter.js"></script>
-<script src="../block-navigation.js"></script>
+<script src="../../sorter.js"></script>
+<script src="../../block-navigation.js"></script>
 </body>
 </html>

@@ -28,7 +28,7 @@ describe('Tests the Cards routes', () => {
     const user = await User.create({ username: 'test', password: '1234' });
     const homes = await Home.create({ title: 'Test House', user: user._id });
     const drawer = await Drawer.create({ name: 'room', home: homes._id });
-    const card = { name: 'card', content: { stuff: '123' }, drawer: drawer._id };
+    const card = { name: 'card', type: 'Appliance', content: ['text', '123'], drawer: drawer._id };
 
     await agent
       .post('/api/v1/auth/signin')
@@ -39,13 +39,14 @@ describe('Tests the Cards routes', () => {
       .send(card)
       .expect(200)
       .then(res => {
-        expect(res.body).toEqual({
+        expect(res.body.cards[0]).toEqual([{
           _id: expect.any(String),
           name: 'card',
-          content: { stuff: '123' },
+          content: expect.any(Array),
           drawer: expect.any(String),
+          type: 'Appliance',
           __v: 0
-        });
+        }]);
       });
   });
 
@@ -53,18 +54,16 @@ describe('Tests the Cards routes', () => {
     const user = await User.create({ username: 'test', password: '1234' });
     const homes = await Home.create({ title: 'Test House', user: user._id });
     const drawer = await Drawer.create({ name: 'room', home: homes._id });
-    const card = await Card.create({ name: 'card', content: { stuff: '123' }, drawer: drawer._id });
+    const card = await Card.create({ name: 'card', type: 'Appliance', content: ['text', '123'], drawer: drawer._id });
     await agent
       .post('/api/v1/auth/signin')
       .send({ username: 'test', password: '1234' });
     return agent
       .put(`/api/v1/cards/${card._id}`)
-      .send({ content: { stuff: '12345' } })
+      .send({ content: ['text', '1234'] })
       .expect(200)
       .then(res => {
-        expect(res.body.content).toEqual({
-          stuff: '12345'
-        });
+        expect(res.body.cards[0][0].content).toEqual(['text', '1234']);
       });
   });
 
@@ -108,7 +107,7 @@ describe('Tests the Cards routes', () => {
     const user = await User.create({ username: 'test', password: '1234' });
     const homes = await Home.create({ title: 'Test House', user: user._id });
     const drawer = await Drawer.create({ name: 'room', home: homes._id });
-    const cards = await Card.create({ name: 'card', content: { stuff: '123' }, drawer: drawer._id }, { name: 'card two', content: { stuff: '123' }, drawer: drawer._id });
+    const cards = await Card.create({ name: 'card', type: 'Appliance', content: ['text', '123'], drawer: drawer._id }, { name: 'card2', type: 'Appliance', content: ['text', '123'], drawer: drawer._id });
     await agent
       .post('/api/v1/auth/signin')
       .send({ username: 'test', password: '1234' });
@@ -116,7 +115,7 @@ describe('Tests the Cards routes', () => {
       .delete(`/api/v1/cards/${cards[0]._id}`)
       .expect(200)
       .then(res => {
-        expect(res.body).toEqual(JSON.parse(JSON.stringify(cards[0])));
+        expect(res.body.cards[0][0]).toEqual(JSON.parse(JSON.stringify(cards[1])));
       }); 
   });
   

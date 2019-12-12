@@ -42,15 +42,16 @@ describe('Tests the Homes route', () => {
       });
   });
 
-  it('Should get all homes for a user', async() => {
+  it.skip('Should get all homes for a user', async() => {
     const user1 = await User.create({ username: 'test', password: '1234' });
     const homes = await Home.create([{ title: 'Test House', user: user1._id }, { title: 'Test House2', user: user1._id }]);
+    
     await agent
       .post('/api/v1/auth/signin')
       .send({ username: 'test', password: '1234' });
   
     return agent
-      .get(`/api/v1/homes/user/${user1._id}`)
+      .get('/api/v1/homes/')
       .expect(200)
       .then(res => {
         const parsedHomes = JSON.parse(JSON.stringify(homes));
@@ -98,7 +99,7 @@ describe('Tests the Homes route', () => {
       .get(`/api/v1/homes/${homes[0]._id}`)
       .expect(200)
       .then(res => {
-        expect(res.body._id).toEqual(JSON.parse(JSON.stringify(homes[0]._id)));
+        expect(res.body.home._id).toEqual(JSON.parse(JSON.stringify(homes[0]._id)));
       });
   });
 
