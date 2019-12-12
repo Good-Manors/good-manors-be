@@ -34,12 +34,12 @@ describe('Tests the Drawers routes', () => {
       .send(drawer)
       .expect(200)
       .then(res => {
-        expect(res.body).toEqual({
+        expect(res.body.drawers).toEqual([{
           _id: expect.any(String),
           name: 'room',
           home: expect.any(String),
           __v: 0
-        });
+        }]);
       });
   });
 
@@ -54,7 +54,7 @@ describe('Tests the Drawers routes', () => {
       .put(`/api/v1/drawers/${drawer._id}`)
       .send({ name: 'updated room' })
       .then(res => {
-        expect(res.body.name).toEqual('updated room');
+        expect(res.body.drawers[0].name).toEqual('updated room');
       });
   });
 
@@ -102,7 +102,7 @@ describe('Tests the Drawers routes', () => {
     return agent
       .delete(`/api/v1/drawers/${drawers[0]._id}`)
       .then(res => {
-        expect(res.body).toEqual(JSON.parse(JSON.stringify(drawers[0])));
+        expect(res.body.drawers).toEqual([JSON.parse(JSON.stringify(drawers[1]))]);
       });
     
   });
