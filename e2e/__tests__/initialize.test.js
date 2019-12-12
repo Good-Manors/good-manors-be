@@ -47,7 +47,7 @@ describe('Tests the Initialize route', () => {
     ]
   };
 
-  it('should post an Initial set up Home, with Drawers, and Cards', async () => {
+  it('should post an Initial set up Home, with Drawers, and Cards', async() => {
     await agent
       .post('/api/v1/auth/signup')
       .send({ username: 'test', password: '1234' })
