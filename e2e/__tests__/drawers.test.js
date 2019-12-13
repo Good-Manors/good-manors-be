@@ -12,11 +12,11 @@ const Home = require('../../lib/model/Home');
 
 describe('Tests the Drawers routes', () => {
 
-  beforeAll(()=> {
-    connect();
+  beforeAll(async()=> {
+    await connect();
   });
-  beforeEach(()=> {
-    dropDatabase();
+  beforeEach(async()=> {
+    await dropDatabase();
   });
   afterAll(()=> {
     return mongoose.connection.close();

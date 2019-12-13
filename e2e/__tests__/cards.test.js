@@ -12,12 +12,12 @@ const Card = require('../../lib/model/Card');
 
 describe('Tests the Cards routes', () => {
 
-  beforeAll(()=> {
-    connect();
+  beforeAll(async()=> {
+    await connect();
   });
 
-  beforeEach(()=> {
-    dropDatabase();
+  beforeEach(async()=> {
+    await dropDatabase();
   });
   
   afterAll(()=> {
@@ -34,20 +34,18 @@ describe('Tests the Cards routes', () => {
       .post('/api/v1/auth/signin')
       .send({ username: 'test', password: '1234' });
 
-    return agent
+    const res = await agent
       .post('/api/v1/cards')
       .send(card)
-      .expect(200)
-      .then(res => {
-        expect(res.body.cards[0]).toEqual([{
-          _id: expect.any(String),
-          name: 'card',
-          content: expect.any(Array),
-          drawer: expect.any(String),
-          type: 'Appliance',
-          __v: 0
-        }]);
-      });
+      .expect(200);
+    expect(res.body).toEqual({
+      _id: expect.any(String),
+      name: 'card',
+      content: expect.any(Array),
+      drawer: expect.any(String),
+      type: 'Appliance',
+      __v: 0
+    });
   });
 
   it('Should update a Drawers contents', async() => {
@@ -58,7 +56,7 @@ describe('Tests the Cards routes', () => {
     await agent
       .post('/api/v1/auth/signin')
       .send({ username: 'test', password: '1234' });
-    return agent
+    await agent
       .put(`/api/v1/cards/${card._id}`)
       .send({ content: ['text', '1234'] })
       .expect(200)
@@ -75,7 +73,7 @@ describe('Tests the Cards routes', () => {
     await agent
       .post('/api/v1/auth/signin')
       .send({ username: 'test', password: '1234' });
-    return agent
+    await agent
       .get(`/api/v1/cards/${card._id}`)
       .expect(200)
       .then(res => {
@@ -91,32 +89,31 @@ describe('Tests the Cards routes', () => {
     await agent
       .post('/api/v1/auth/signin')
       .send({ username: 'test', password: '1234' });
-    return agent
+    const res = await agent
       .get(`/api/v1/cards/drawer/${drawer._id}`)
-      .expect(200)
-      .then(res => {
-        const parsedCards = JSON.parse(JSON.stringify(cards));
-        expect(res.body).toHaveLength(2);
-        parsedCards.forEach(card => {
-          expect(res.body).toContainEqual(card);
-        });
-      });
+      .expect(200);
+
+    const parsedCards = JSON.parse(JSON.stringify(cards));
+
+    expect(res.body).toHaveLength(2);
+    parsedCards.forEach(card => {
+      expect(res.body).toContainEqual(card);
+    });
   });
 
   it('Should Delete a Card', async() => {
     const user = await User.create({ username: 'test', password: '1234' });
     const homes = await Home.create({ title: 'Test House', user: user._id });
     const drawer = await Drawer.create({ name: 'room', home: homes._id });
-    const cards = await Card.create({ name: 'card', type: 'Appliance', content: ['text', '123'], drawer: drawer._id }, { name: 'card2', type: 'Appliance', content: ['text', '123'], drawer: drawer._id });
+    const cards = await Card.create([{ name: 'card', type: 'Appliance', content: ['text', '123'], drawer: drawer._id }, { name: 'card2', type: 'Appliance', content: ['text', '123'], drawer: drawer._id }]);
     await agent
       .post('/api/v1/auth/signin')
       .send({ username: 'test', password: '1234' });
-    return agent
+    const result = await agent
       .delete(`/api/v1/cards/${cards[0]._id}`)
-      .expect(200)
-      .then(res => {
-        expect(res.body.cards[0][0]).toEqual(JSON.parse(JSON.stringify(cards[1])));
-      }); 
+      .expect(200);
+    expect(result.body.cards).toHaveLength(1);
+    expect(result.body.cards[0][0]).toEqual(JSON.parse(JSON.stringify(cards[1])));
   });
-  
+
 });
