@@ -34,7 +34,7 @@ describe('Tests the Users route for default Home', () => {
       .put('/api/v1/users/default-home')
       .send({ home: house._id })
       .expect(200);
-    expect(res.body.user).toEqual(JSON.parse(JSON.stringify(user)));
+    expect(res.body.user.defaultHome).toEqual(JSON.parse(JSON.stringify(house._id)));
 
   });
 
