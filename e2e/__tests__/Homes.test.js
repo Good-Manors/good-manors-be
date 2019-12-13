@@ -10,11 +10,11 @@ const Home = require('../../lib/model/Home');
 
 
 describe('Tests the Homes route', () => {
-  beforeAll(() => {
-    connect();
+  beforeAll(async() => {
+    await connect();
   });
-  beforeEach(() => {
-    dropDatabase();
+  beforeEach(async() => {
+    await dropDatabase();
   });
   afterAll(() => {
     return mongoose.connection.close();
@@ -23,12 +23,10 @@ describe('Tests the Homes route', () => {
 
   it('Should post a new Home', async() => {
     const home = { title: 'Test House' };
-
-    await User.create({ username: 'test', password: '1234' });
     await agent
-      .post('/api/v1/auth/signin')
+      .post('/api/v1/auth/signup')
       .send({ username: 'test', password: '1234' });
-    return agent
+    await agent
       .post('/api/v1/homes')
       .send(home)
       .expect(200)
@@ -42,15 +40,13 @@ describe('Tests the Homes route', () => {
       });
   });
 
-  it.skip('Should get all homes for a user', async() => {
+  it('Should get all homes for a user', async() => {
     const user1 = await User.create({ username: 'test', password: '1234' });
     const homes = await Home.create([{ title: 'Test House', user: user1._id }, { title: 'Test House2', user: user1._id }]);
-    
     await agent
       .post('/api/v1/auth/signin')
       .send({ username: 'test', password: '1234' });
-  
-    return agent
+    await agent
       .get('/api/v1/homes/')
       .expect(200)
       .then(res => {

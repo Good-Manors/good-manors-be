@@ -8,12 +8,12 @@ const connect = require('../../lib/utils/connect');
 
 describe('Tests the Initialize route', () => {
 
-  beforeAll(() => {
-    connect();
+  beforeAll(async() => {
+    await connect();
   });
 
-  beforeEach(() => {
-    dropDatabase();
+  beforeEach(async() => {
+    await dropDatabase();
 
   });
 
